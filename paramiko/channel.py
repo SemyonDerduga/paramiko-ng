@@ -828,6 +828,8 @@ class Channel (ClosingContextManager):
             sent, there is no way to determine how much data (if any) was sent.
             This is irritating, but identically follows Python's API.
         """
+        if len(s) > 128 * 1024:
+            s = memoryview(s)
         while s:
             sent = self.send(s)
             s = s[sent:]
